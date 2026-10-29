@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      padding: 16px;
+      margin: 0;
+      width: 270px;
+      color: #202124;
+      background: #ffffff;
+    }
+    .group { margin-bottom: 14px; }
+    label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: #3c4043; }
+    .row { display: flex; align-items: center; gap: 8px; }
+    input[type="text"] {
+      width: 45px; text-align: center; font-weight: bold; text-transform: uppercase;
+      border: 1px solid #dadce0; border-radius: 4px; padding: 6px 4px; outline: none; font-size: 13px;
+    }
+    input[type="text"]:focus { border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26,115,232,0.2); }
+    select { width: 100%; padding: 6px; border: 1px solid #dadce0; border-radius: 4px; outline: none; font-size: 12px; }
+
+    .colors-row {
+      display: flex; justify-content: space-between; background: #f8f9fa;
+      padding: 6px 10px; border-radius: 6px; border: 1px solid #dadce0;
+    }
+    .color-item { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+    .color-tag { font-weight: bold; }
+    .del-tag { color: #d93025; }
+    .add-tag { color: #137333; }
+    input[type="color"] {
+      -webkit-appearance: none; border: 1px solid #dadce0; border-radius: 4px;
+      width: 24px; height: 24px; padding: 0; cursor: pointer; background: none;
+    }
+    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+    input[type="color"]::-webkit-color-swatch { border: none; border-radius: 3px; }
+
+    .checkbox-row {
+      display: flex; align-items: center; gap: 6px; font-size: 12px; color: #5f6368; cursor: pointer; font-weight: normal; margin-bottom: 6px;
+    }
+    .checkbox-row input { margin: 0; cursor: pointer; }
+    .actions { display: flex; gap: 8px; margin-top: 18px; }
+    button {
+      flex: 1; padding: 8px 0; border: none; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.15s;
+    }
+    .btn-primary { background: #1a73e8; color: white; }
+    .btn-primary:hover { background: #1557b0; }
+    .btn-default { background: #f1f3f4; color: #3c4043; }
+    .btn-default:hover { background: #e8f0fe; color: #1a73e8; }
+    #status {
+      margin-top: 12px; font-size: 11px; color: #137333; background: #e6f4ea; 
+      padding: 8px; border-radius: 4px; display: none; text-align: center; font-weight: 500; line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="group">
+    <label>🔍 提取对比列 (基准 vs 目标)</label>
+    <div class="row">
+      <input type="text" id="col1" maxlength="3" placeholder="C">
+      <span>vs</span>
+      <input type="text" id="col2" maxlength="3" placeholder="G">
+    </div>
+  </div>
+
+  <div class="group">
+    <label>🎨 自定义标记颜色</label>
+    <div class="colors-row">
+      <div class="color-item">
+        <span class="color-tag del-tag">左(删):</span>
+        <input type="color" id="colorDel" value="#d93025">
+      </div>
+      <div class="color-item">
+        <span class="color-tag add-tag">右(增):</span>
+        <input type="color" id="colorAdd" value="#137333">
+      </div>
+    </div>
+  </div>
+
+  <div class="group">
+    <label>比对粒度</label>
+    <select id="granularity">
+      <option value="word">智能整词</option>
+      <option value="char">逐字符</option>
+    </select>
+  </div>
+
+  <div class="group">
+    <label class="checkbox-row" title="取消勾选后，卡片将永远常驻显示">
+      <input type="checkbox" id="hideOnEdit" checked>
+      编辑单元格时自动隐藏卡片
+    </label>
+    <label class="checkbox-row" title="单元格修改完成保存后，自动拉取最新内容更新对比">
+      <input type="checkbox" id="autoRecompare" checked>
+      编辑完成后自动重新对比
+    </label>
+  </div>
+
+  <div class="actions">
+    <button class="btn-primary" id="btnCompare">开始提取</button>
+    <button class="btn-default" id="btnClear">清除</button>
+  </div>
+  <div id="status"></div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

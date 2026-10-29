@@ -1,0 +1,166 @@
+/* ================== 右侧动态排版的卡片流样式 ================== */
+
+#gs-side-panel {
+  position: fixed;
+  top: 0;
+  right: 15px; 
+  bottom: 0;
+  width: 580px; 
+  pointer-events: none;
+  z-index: 999999;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  opacity: 1;
+  visibility: visible;
+
+  /* 默认颜色变量 */
+  --gs-color-del: #d93025;
+  --gs-bg-del: #fce8e6;
+  --gs-color-add: #137333;
+  --gs-bg-add: #e6f4ea;
+}
+
+#gs-side-panel.gs-panel-hidden,
+#gs-side-panel.gs-panel-hidden * {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+#gs-side-panel.gs-tab-hidden {
+  display: none !important;
+}
+
+.gs-diff-card {
+  position: absolute;
+  right: 0;
+  width: 100%;
+  min-height: 48px; 
+  background: #ffffff;
+  border: 1px solid #dadce0;
+  border-radius: 6px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  transform: translateY(-50%);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, z-index 0s, opacity 0.15s ease;
+  opacity: 0.98;
+  overflow: hidden;
+
+  --card-fs: 13px;
+  --card-pad-y: 6px;
+  --card-pad-x: 12px;
+  --card-line-height: 1.38;
+  --card-header-fs: 11px;
+  --card-header-pad-y: 3px;
+}
+
+.gs-card-resize-handle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: #1a73e8;
+  cursor: col-resize;
+  user-select: none;
+  z-index: 10;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  transition: background 0.15s, width 0.15s;
+}
+
+.gs-card-resize-handle:hover,
+.gs-card-resize-handle:active {
+  background: #1557b0;
+  width: 8px;
+}
+
+.gs-card-header {
+  background: #f8f9fa;
+  font-size: var(--card-header-fs, 11px);
+  font-weight: 600;
+  color: #5f6368;
+  padding: var(--card-header-pad-y, 3px) 12px;
+  padding-left: 14px;
+  border-bottom: 1px solid #dadce0;
+  border-top-right-radius: 6px;
+  flex-shrink: 0;
+  line-height: 16px;
+  transition: font-size 0.12s, padding 0.12s;
+}
+
+.gs-card-body {
+  display: flex;
+  gap: 12px;
+  padding: var(--card-pad-y, 6px) var(--card-pad-x, 12px);
+  padding-left: 14px;
+  font-family: Arial, sans-serif;
+  font-size: var(--card-fs, 13px);
+  line-height: var(--card-line-height, 1.38);
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow: hidden;
+  transition: font-size 0.12s, padding 0.12s;
+}
+
+.gs-diff-card:hover {
+  z-index: 10000 !important;
+  opacity: 1 !important;
+  max-height: 600px !important;
+  transform: translateY(-50%) scale(1.02) !important;
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.4) !important;
+  overflow: visible !important;
+}
+
+.gs-diff-card.gs-dock-bottom {
+  transform-origin: bottom right;
+}
+.gs-diff-card.gs-dock-bottom:hover {
+  transform: translateY(-75%) scale(1.02) !important;
+}
+
+.gs-diff-card:hover .gs-card-header {
+  font-size: 11.5px !important;
+  padding: 4px 12px !important;
+  padding-left: 14px !important;
+}
+
+.gs-diff-card:hover .gs-card-body {
+  overflow-y: auto !important;
+}
+
+.gs-row-del, .gs-row-add {
+  flex: 1; 
+  min-width: 0; 
+}
+
+.gs-row-del {
+  color: #5f6368;
+  border-right: 1px dashed #dadce0; 
+  padding-right: 12px;
+}
+
+.gs-row-add {
+  color: #202124;
+}
+
+.gs-del {
+  background: var(--gs-bg-del, #fce8e6);
+  color: var(--gs-color-del, #d93025);
+  text-decoration: line-through;
+  padding: 1px 3px;
+  border-radius: 3px;
+  margin: 0 1px;
+}
+
+/* 核心修复：坚决取消浏览器对 <ins> 标签默认自带的下划线，防止空格变成横杠 */
+.gs-add {
+  background: var(--gs-bg-add, #e6f4ea);
+  color: var(--gs-color-add, #137333);
+  font-weight: bold;
+  text-decoration: none !important; 
+  padding: 1px 3px;
+  border-radius: 3px;
+  margin: 0 1px;
+}
